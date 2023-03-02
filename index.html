@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Земля и Луна</title>
+    <!-- подключаем свои стили -->
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+    <!-- подключаем LUME -->
+    <script src="https://unpkg.com/lume@0.3.0-alpha.11/dist/global.js"></script>
+
+    <!-- по умолчанию сцена занимает всё доступное место, в нашем случае — весь раздел body -->
+    <lume-scene id="scene" webgl>
+
+        <!-- настраиваем положение камеры на старте и в общем -->
+        <lume-camera-rig align-point="0.5 0.5 0.5" initial-polar-angle="0" min-distance="100" max-distance="500"
+            initial-distance="600"></lume-camera-rig>
+
+        <!-- заполняем пространство звёздами -->
+        <lume-sphere id="stars" texture="https://i.ibb.co/4gHcRZD/bg3-je3ddz.jpg" receive-shadow="false"
+            has="basic-material" sidedness="back" size="4000 4000 4000" align-point="0.5 0.5 0.5"
+            mount-point="0.5 0.5 0.5" color="pink"></lume-sphere>
+
+        <!-- добавляем свет -->
+        <!-- настраиваем направление света -->
+        <lume-node align-point="0.5 0.5" size="0 0" rotation="0 -50 0">
+            <lume-node align-point="0.5 0.5" size="0 0" rotation="10 0 0">
+                <!-- добавляем источник света -->
+                <lume-point-light id="light" size="0 0" position="0 0 1900" color="#9400D3" intensity="2"
+                    distance="10000" shadow-map-width="2048" shadow-map-height="2048" shadow-camera-far="20000">
+                </lume-point-light>
+            </lume-node>
+        </lume-node>
+
+        <!-- добавляем второй свет -->
+        <!-- настраиваем направление света -->
+        <lume-node align-point="0.5 0.5" size="0 0" rotation="0 50 0">
+            <lume-node align-point="0.5 0.5" size="0 0" rotation="10 0 0">
+                <!-- добавляем источник света -->
+                <lume-point-light id="light" size="0 0" position="0 0 -1900" color="#FF1493" intensity="1"
+                    distance="10000" shadow-map-width="3000" shadow-map-height="3000" shadow-camera-far="2000">
+                </lume-point-light>
+            </lume-node>
+        </lume-node>
+
+        <!-- добавляем третий свет -->
+        <!-- настраиваем направление света -->
+        <lume-node align-point="0.5 0.5" size="0 0" rotation="-10 0 0">
+            <lume-node align-point="0.5 0.5" size="0 0" rotation="0 0 0">
+                <!-- добавляем источник света -->
+                <lume-point-light id="light" size="0 0" position="900 0 0" color="#1E90FF" intensity="2" distance="5000"
+                    shadow-map-width="3000" shadow-map-height="3000" shadow-camera-far="2000"></lume-point-light>
+            </lume-node>
+        </lume-node>
+
+        <!-- Рисуем планету -->
+        <lume-node align-point="0.5 0.5" size="0 0 0">
+
+            <!-- включаем вращение планеты -->
+            <lume-node rotation="0 180 0">
+                <!-- Планета — это шар, поэтому рисуем шар и натягиваем на него текстуру: изображение планеты -->
+                <lume-sphere id="earth"
+                    texture="https://s3-us-west-2.amazonaws.com/s.cdpn.io/297733/sunSurfaceMaterial.jpg"
+                    size="120 120 120" mount-point="0.5 0.5 0.5" align-point="0.5 0.5" color="white">
+            </lume-node>
+        </lume-node>
+
+        <lume-node align-point="0.5 0.5" size="0 0 0">
+
+            <!-- включаем вращение Меркурия -->
+            <lume-node rotation="90 10 0">
+                <!-- Меркурий — это шар, поэтому рисуем шар и натягиваем на него текстуру: изображение Меркурия -->
+                <lume-sphere id="mercury" texture="https://s3-us-west-2.amazonaws.com/s.cdpn.io/2104200/mercury.jpg"
+                    size="120 120 120" mount-point="1.5 1.5 1.5" align-point="0.5 0.5" color="#e2e2e2">
+            </lume-node>
+        </lume-node>
+
+        <!-- добавляем облака -->
+        <lume-sphere id="clouds" texture="https://assets.codepen.io/191583/earthclouds.png" opacity="0.7"
+            size="150 150 150" align-point="0.5 0.5 0.5" mount-point="0.5 0.5 0.5" color="#FFFF99"></lume-sphere>
+        </lume-sphere>
+
+        <!-- рисуем Луну -->
+        <lume-node align-point="0.5 0.5" rotation="90 10 0">
+            <!-- указываем, как ей вращаться вокруг планеты -->
+            <lume-node id="moonRotator" align-point="0.5 0.5" rotation="0 0 100">
+                <!-- рисуем круг и добавляем на него текстуру -->
+                <lume-sphere texture="https://assets.codepen.io/191583/moon.jpg" position="250" size="20 20 20"
+                    mount-point="0.3 0.3 0.3" color="#FFD1DC"></lume-sphere>
+            </lume-node>
+        </lume-node>
+    </lume-scene>
+
+    <!-- подключаем наш скрипт -->
+    <script src="script.js"></script>
+
+</body>
+
+</html>
